@@ -360,7 +360,7 @@ html, body {
     height: 100%;
     overflow: hidden;
     background-color: #fafafa;
-    font-size: 62.5%;
+    /* font-size: 62.5%; */
 }
 
 html {
