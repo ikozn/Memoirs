@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    主页面
+    登录页面
   </div>
 </template>
 
@@ -8,6 +8,9 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'Home'
+  name: 'Login',
+  setup () {
+    console.log('登录')
+  }
 })
 </script>
