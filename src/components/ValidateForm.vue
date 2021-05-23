@@ -4,7 +4,7 @@
     <div class="submit-area" @click.prevent="submitForm">
       <slot name="submit">
         <button class="block text-center text-white bg-blue-600 p-3 duration-300 rounded-sm hover:bg-blue-900 w-full">
-          <slot name="submit-text">提交</slot>
+          <slot name="submit-text"> </slot>
         </button>
       </slot>
     </div>

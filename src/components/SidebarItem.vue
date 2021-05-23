@@ -5,10 +5,10 @@
           custom
         >
           <li
-            class="my-px rounded-sm"
+            class="my-px rounded-sm hover:bg-gray-200"
             :class="[
               isActive && 'router-link-activ',
-              isExactActive && 'router-link-exact-active bg-blue-400 text-white',
+              isExactActive && 'router-link-exact-active bg-blue-500 text-white',
             ]"
           >
             <a
@@ -39,7 +39,6 @@ export default defineComponent({
     }
   },
   setup (props) {
-    console.log(props.text)
     return {
       ...toRefs(props)
     }
