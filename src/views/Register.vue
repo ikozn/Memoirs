@@ -1,124 +1,111 @@
 <template>
-<div class="container max-w-full mx-auto md:py-24 px-6">
-  <div class="max-w-sm mx-auto px-6">
-        <div class="relative flex flex-wrap">
-            <div class="w-full relative">
-                <div class="md:mt-6">
-                    <div class="text-center font-semibold text-black">
-                        Lorem ipsum dolor
-                    </div>
-                    <div class="text-center font-base text-black">
-                        Sed ut perspiciatis unde?
-                    </div>
-                    <form class="mt-8" x-data="{password: '',password_confirm: ''}">
-                        <div class="mx-auto max-w-lg ">
-                            <div class="py-1">
-                                <span class="px-1 text-sm text-gray-600">Username</span>
-                                <input placeholder="" type="text"
-                                       class="text-md block px-3 py-2 rounded-lg w-full
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none">
-                            </div>
-                            <div class="py-1">
-                                <span class="px-1 text-sm text-gray-600">Email</span>
-                                <input placeholder="" type="email"
-                                       class="text-md block px-3 py-2 rounded-lg w-full
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none">
-                            </div>
-                            <div class="py-1">
-                                <span class="px-1 text-sm text-gray-600">Password</span>
-                                <input placeholder="" type="password" x-model="password"
-                                       class="text-md block px-3 py-2 rounded-lg w-full
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none">
-                            </div>
-                            <div class="py-1">
-                                <span class="px-1 text-sm text-gray-600">Password Confirm</span>
-                                <input placeholder="" type="password" x-model="password_confirm"
-                                       class="text-md block px-3 py-2 rounded-lg w-full
-                bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none">
-                            </div>
-                            <div class="flex justify-start mt-3 ml-4 p-1">
-                                <ul>
-                                    <li class="flex items-center py-1">
-                                        <div :class="{'bg-green-200 text-green-700': password == password_confirm && password.length > 0, 'bg-red-200 text-red-700':password != password_confirm || password.length == 0}"
-                                             class=" rounded-full p-1 fill-current ">
-                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path x-show="password == password_confirm && password.length > 0" stroke-linecap="round"
-                                                      stroke-linejoin="round" stroke-width="2"
-                                                      d="M5 13l4 4L19 7"/>
-                                                <path x-show="password != password_confirm || password.length == 0" stroke-linecap="round"
-                                                      stroke-linejoin="round" stroke-width="2"
-                                                      d="M6 18L18 6M6 6l12 12"/>
+<div class="bg-white rounded-md lg:w-4/12 md:6/12 w-10/12 m-auto my-10 shadow-sm">
+            <div class="py-8 px-8 rounded-xl">
 
-                                            </svg>
-                                        </div>
-                                        <span :class="{'text-green-700': password == password_confirm && password.length > 0, 'text-red-700':password != password_confirm || password.length == 0}"
-                                              class="font-medium text-sm ml-3"
-                                              x-text="password == password_confirm && password.length > 0 ? 'Passwords match' : 'Passwords do not match' "></span>
-                                    </li>
-                                    <li class="flex items-center py-1">
-                                        <div :class="{'bg-green-200 text-green-700': password.length > 7, 'bg-red-200 text-red-700':password.length < 7 }"
-                                             class=" rounded-full p-1 fill-current ">
-                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path x-show="password.length > 7" stroke-linecap="round"
-                                                      stroke-linejoin="round" stroke-width="2"
-                                                      d="M5 13l4 4L19 7"/>
-                                                <path x-show="password.length < 7" stroke-linecap="round"
-                                                      stroke-linejoin="round" stroke-width="2"
-                                                      d="M6 18L18 6M6 6l12 12"/>
+                <h1 class="font-medium text-2xl mt-3 text-center">Memoirs</h1>
+                <p class="text-xs text-center font-light text-gray-400"> 让时间与日子留下痕迹</p>
+                <validate-form class="mt-6" @form-submit="login">
+                  <validate-input :rules="usernameRules" v-model="username" placeholder="用户名" ></validate-input>
+                  <validate-input :rules="emailRules" v-model="emailVal" placeholder="邮箱" ></validate-input>
+                  <validate-input :rules="passwdRules" v-model="passwdVal" placeholder="密码" type="password"></validate-input>
+                  <validate-input :rules="passwdConfirmRules" v-model="passwdConfirmVal" placeholder="再次输入密码进行确认" type="password"></validate-input>
+                  <template #submit-text>注册</template>
+                </validate-form>
+                <p class="mt-12 text-xs text-center font-light text-gray-400">
+                    已有账号?
+                    <router-link to="Login" class="text-black font-medium">登录</router-link>
+                </p>
 
-                                            </svg>
-                                        </div>
-                                        <span :class="{'text-green-700': password.length > 7, 'text-red-700':password.length < 7 }"
-                                              class="font-medium text-sm ml-3"
-                                              x-text="password.length > 7 ? 'The minimum length is reached' : 'At least 8 characters required' "></span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="flex justify-start">
-                                <label class="block text-gray-500 font-bold my-4 flex items-center">
-                                    <input class="leading-loose text-pink-600 top-0" type="checkbox"/>
-                                    <span class="ml-2 text-sm py-2 text-gray-600 text-left">Accept the
-                                          <a href="#"
-                                             class="font-semibold text-black border-b-2 border-gray-200 hover:border-gray-500">
-                                           Terms and Conditions of the site
-                                          </a>and
-                                          <a href="#"
-                                             class="font-semibold text-black border-b-2 border-gray-200 hover:border-gray-500">
-                                            the information data policy.</a>
-                                    </span>
-                                </label>
-                            </div>
-                            <button class="mt-3 text-lg font-semibold
-            bg-gray-800 w-full text-white rounded-lg
-            px-6 py-3 block shadow-xl hover:text-white hover:bg-black">
-                                Register
-                            </button>
-                        </div>
-                    </form>
-
-                    <div class="text-sm font-semibold block sm:hidden py-6 flex justify-center">
-                        <a href="#"
-                           class="text-black font-normal border-b-2 border-gray-200 hover:border-teal-500">You're already member?
-                            <span class="text-black font-semibold">
-            Login
-          </span>
-                        </a>
-                    </div>
-
-                </div>
             </div>
         </div>
-    </div>
-</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import ValidateInput, { RulesType } from '@/components/ValidateInput.vue'
+import ValidateForm from '@/components/ValidateForm.vue'
+import { useRouter } from 'vue-router'
+import { User } from 'leancloud-storage'
 
 export default defineComponent({
-  name: 'Register',
+  name: 'Login',
+  components: {
+    ValidateInput,
+    ValidateForm
+  },
   setup () {
-    console.log('登录')
+    const username = ref('')
+    const usernameRules:RulesType = [
+      {
+        type: 'required',
+        message: '请输入用户名'
+      }
+    ]
+
+    const emailVal = ref('')
+    const emailRules:RulesType = [
+      {
+        type: 'required',
+        message: '请输入邮箱'
+      },
+      {
+        type: 'email',
+        message: '邮箱格式不正确'
+      }
+    ]
+
+    const passwdVal = ref('')
+    const passwdRules:RulesType = [
+      {
+        type: 'required',
+        message: '请输入密码'
+      }
+    ]
+
+    const passwdConfirmVal = ref('')
+    const passwdConfirmRules:RulesType = [
+      {
+        type: 'custom',
+        message: '两次密码不一致',
+        validator: () => {
+          return passwdConfirmVal.value === passwdVal.value
+        }
+      }
+    ]
+
+    const router = useRouter()
+    const login = async (passed: boolean) => {
+      if (passed) {
+        const user = {
+          username: username.value,
+          password: passwdVal.value,
+          email: emailVal.value
+        }
+
+        try {
+          const user = new User()
+          user.setUsername(username.value)
+          user.setPassword(passwdVal.value)
+          user.setEmail(emailVal.value)
+          await user.signUp()
+          router.push('login')
+        } catch (e) {
+          console.log('注册失败', e)
+        }
+      }
+    }
+
+    return {
+      username,
+      usernameRules,
+      emailVal,
+      emailRules,
+      passwdVal,
+      passwdRules,
+      passwdConfirmVal,
+      passwdConfirmRules,
+      login
+    }
   }
 })
 </script>
