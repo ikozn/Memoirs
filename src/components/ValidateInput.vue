@@ -10,7 +10,7 @@
         v-model="inputRef.val"
         @blur="validate"
       />
-      <div class="flex items-center py-4" v-if="inputRef.error">
+      <div class="flex items-center pt-4" v-if="inputRef.error">
         <div class="bg-red-200 text-red-700 rounded-full p-1 fill-current">
             <svg
                 class="w-4 h-4"
@@ -40,8 +40,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed, PropType } from 'vue'
-
+import { defineComponent, ref, reactive, computed, onMounted, PropType } from 'vue'
+import { emitter } from '@/components/ValidateForm.vue'
 // 定义规则属性
 interface RuleProp {
     type: 'required' | 'email' | 'custom';
@@ -100,6 +100,11 @@ export default defineComponent({
       inputRef.error = !passed
       return passed
     }
+
+    // - 发送当前输入框验证器
+    onMounted(() => {
+      emitter.emit('form-item-created', validate)
+    })
 
     return {
       hasInput,
