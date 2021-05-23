@@ -76,7 +76,7 @@ export default defineComponent({
           })
           .then(() => {
             console.log('登录成功')
-            router.push('Main')
+            router.push('main')
           })
           .catch(({ error }) => {
             console.log('登录失败', error)

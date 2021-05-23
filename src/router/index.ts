@@ -3,6 +3,9 @@ import Home from '@/views/Home.vue'
 import Main from '@/views/Main.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
+import Memo from '@/views/Memo.vue'
+import Profile from '@/views/Profile.vue'
+import Setting from '@/views/Setting.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -14,7 +17,24 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/main',
     name: 'Main',
-    component: Main
+    component: Main,
+    children: [
+      {
+        path: '',
+        name: 'Memo',
+        component: Memo
+      },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: Profile
+      },
+      {
+        path: 'setting',
+        name: 'Setting',
+        component: Setting
+      }
+    ]
   },
   {
     path: '/login',
