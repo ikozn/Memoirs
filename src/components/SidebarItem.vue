@@ -5,10 +5,11 @@
           custom
         >
           <li
-            class="my-px rounded-sm hover:bg-gray-200"
+            class="my-px rounded-sm"
             :class="[
               isActive && 'router-link-activ',
               isExactActive && 'router-link-exact-active bg-blue-500 text-white',
+              !isExactActive && 'hover:bg-gray-200'
             ]"
           >
             <a
