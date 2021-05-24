@@ -1,7 +1,7 @@
 <template>
   <section class="main-container">
     <aside class="aside overflow-hidden">
-      <sidebar></sidebar>
+      <sidebar :username="username"></sidebar>
     </aside>
     <main class="main">
       <router-view />
@@ -11,9 +11,19 @@
 
 <script lang="ts">
 import Sidebar from '@/components/Sidebar.vue'
+import AV from 'leancloud-storage'
+
 export default {
   components: {
     Sidebar
+  },
+  setup () {
+    const currentUser = AV.User.current()
+    const { username } = currentUser.attributes
+
+    return {
+      username
+    }
   }
 }
 </script>
