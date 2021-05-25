@@ -4,7 +4,7 @@
       <input
         type="text"
         autofocus
-        :class="{'border-2 border-red-500': inputRef.error, 'border-2 border-green-500': hasInput && !inputRef.error}"
+        :class="{'border-2 border-red-500': inputRef.error}"
         class="rounded-sm px-4 py-3 mt-3 focus:outline-none bg-gray-100 w-full "
         v-bind="$attrs"
         v-model="inputRef.val"
