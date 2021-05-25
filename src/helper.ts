@@ -29,6 +29,10 @@ export function getBeforeDaysTime (date: string | number | Date, days: number) {
   return new Date(`${year}-${month}-${day}`)
 }
 
+export function dateDif (date1: string | number | Date, date2: string | number | Date) {
+  return (getDayTime(date1).getTime() - getDayTime(date2).getTime()) / A_DAY_TIME
+}
+
 export const objToArray = <T>(obj: {[key:string]: T}) => {
   return Object.keys(obj).map(key => obj[key])
 }

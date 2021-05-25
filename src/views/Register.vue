@@ -13,7 +13,7 @@
                 </validate-form>
                 <p class="mt-12 text-xs text-center font-light text-gray-400">
                     已有账号?
-                    <router-link to="Login" class="text-black font-medium">登录</router-link>
+                    <router-link to="login" class="text-black font-medium">登录</router-link>
                 </p>
 
             </div>
@@ -28,7 +28,7 @@ import { useRouter } from 'vue-router'
 import { User } from 'leancloud-storage'
 
 export default defineComponent({
-  name: 'Login',
+  name: 'login',
   components: {
     ValidateInput,
     ValidateForm

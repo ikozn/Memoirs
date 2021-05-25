@@ -64,56 +64,65 @@ export interface MemoItem {
 
 }
 export interface GlobalDataProps {
+  memoCount: number,
   memoList: {
     [key: number]: MemoItem
+  }
+}
+const addMemo = (state: GlobalDataProps, memoData: { id: any; createdAt: any; get: (arg0: string) => any }) => {
+  const { memoList } = state as GlobalDataProps
+
+  // - 获取数据
+  const id = memoData.id
+  const time = memoData.createdAt
+  const memo = memoData.get('memo')
+  const dateTime = getDayTime(time).getTime()
+
+  // - 初始化列表
+  if (!memoList[dateTime]) {
+    memoList[dateTime] = {
+      date: dateTime,
+      memos: {}
+    }
+  }
+
+  // - 添加数据
+  memoList[dateTime].memos[id] = {
+    id,
+    memo,
+    time
   }
 }
 
 export default createStore<GlobalDataProps | string>({
   state: {
+    memoCount: 0,
     memoList: {}
   },
   mutations: {
-    Logout (state) {
+    logout (state) {
       (state as GlobalDataProps).memoList = {}
     },
+    getMemoCount (state, count) {
+      (state as GlobalDataProps).memoCount = count
+    },
     addMemo (state, { memoData }) {
-      const { memoList } = state as GlobalDataProps
-
-      // - 获取数据
-      const id = memoData.id
-      const time = memoData.createdAt
-      const memo = memoData.get('memo')
-      const dateTime = getDayTime(time).getTime()
-
-      // - 初始化列表
-      if (!memoList[dateTime]) {
-        memoList[dateTime] = {
-          date: dateTime,
-          memos: {}
-        }
-      }
-
-      // - 添加数据
-      memoList[dateTime].memos[id] = {
-        id,
-        memo,
-        time
-      }
+      (state as GlobalDataProps).memoCount += 1
+      addMemo(state as GlobalDataProps, memoData)
     },
     getMemos (state, memos) {
       // - 循环添加数据
       for (const item of memos) {
-        this.commit('addMemo', { memoData: item })
+        addMemo(state as GlobalDataProps, item)
       }
     }
   },
   actions: {
-    async Login (state, { username, password }) {
+    async login (state, { username, password }) {
       return User.logIn(username, password)
     },
-    async Logout ({ commit }) {
-      commit('Logout')
+    async logout ({ commit }) {
+      commit('logout')
       return User.logOut()
     },
     async addMemo ({ commit }, { memo }) {
@@ -122,8 +131,15 @@ export default createStore<GlobalDataProps | string>({
       commit('addMemo', { memoData: newMemo })
       return newMemo
     },
+    async getMemoCount ({ commit }) {
+      const query = new AV.Query('Memoires')
+      query.equalTo('owner', User.current())
+      const count = await query.count()
+      commit('getMemoCount', count)
+    },
     async getMemos ({ commit }, { startDay, endDay }) {
       const query = new AV.Query('Memoires')
+
       // 1. 设置当前用户
       query.equalTo('owner', User.current())
 
@@ -132,13 +148,15 @@ export default createStore<GlobalDataProps | string>({
       query.lessThan('createdAt', getDayTime(endDay))
 
       const memos = await query.find()
-
       commit('getMemos', memos)
+
       return memos
     }
   },
   getters: {
-    getMemoList: (state) => (state as GlobalDataProps).memoList
+    getMemoList: (state) => (state as GlobalDataProps).memoList,
+    getCurrentUser: (state) => AV.User.current(),
+    getMemoCount: (state) => (state as GlobalDataProps).memoCount
   },
   modules: {}
 })

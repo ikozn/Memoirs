@@ -39,7 +39,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
-  name: 'Login',
+  name: 'login',
   components: {
     ValidateInput,
     ValidateForm
@@ -70,7 +70,7 @@ export default defineComponent({
     const login = (passed: boolean) => {
       if (passed) {
         store
-          .dispatch('Login', {
+          .dispatch('login', {
             username: emailVal.value,
             password: passwdVal.value
           })

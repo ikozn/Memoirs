@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import Home from '@/views/Home.vue'
 import Main from '@/views/Main.vue'
-import Login from '@/views/Login.vue'
+import login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
 import Memo from '@/views/Memo.vue'
 import Profile from '@/views/Profile.vue'
@@ -38,8 +38,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/login',
-    name: 'Login',
-    component: Login
+    name: 'login',
+    component: login
   },
   {
     path: '/register',

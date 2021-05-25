@@ -11,11 +11,11 @@
     <div class="stat px-4">
       <div class="flex items-center justify-between text-gray-400">
         <div class="data">
-          <div class="text-2xl font-bold">680</div>
+          <div class="text-2xl font-bold">{{ memoCount }}</div>
           <div class="text-xs">MEMO</div>
         </div>
         <div class="data">
-          <div class="text-2xl font-bold">168</div>
+          <div class="text-2xl font-bold">{{day}}</div>
           <div class="text-xs">DAY</div>
         </div>
       </div>
@@ -63,111 +63,44 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import SidebarItem from '@/components/SidebarItem.vue'
+import { dateDif } from '@/helper'
+
 export default defineComponent({
   name: 'Sidebar',
-  props: {
-    username: {
-      type: String,
-      required: true
-    }
-  },
   components: {
     SidebarItem
   },
   setup () {
     const store = useStore()
     const router = useRouter()
+    // - 获取MemoCount
+    store.dispatch('getMemoCount')
+
+    const user = computed(() => store.getters.getCurrentUser)
+    const username = computed(() => user.value.attributes.username)
+    const memoCount = computed(() => store.getters.getMemoCount)
+    const day = computed(() => dateDif(new Date(), user.value.createdAt))
+
     const logout = () => {
-      store.dispatch('Logout')
+      store.dispatch('logout')
         .then(() => {
-          router.push({ name: 'Login' })
+          router.push({ name: 'login' })
         })
     }
 
     return {
-      logout
+      logout,
+      username,
+      memoCount,
+      day
     }
   }
 })
 </script>
 
 <style scoped>
-/* .header {
-  height: 6.5rem;
-}
-
-.user {
-  padding: 0 16px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.nickname {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #5f5f5f;
-}
-
-.user .nickname .name {
-  display: inline-block;
-  cursor: pointer;
-}
-
-.user .nickname .pro {
-  color: white;
-  background: #9d9d9d;
-  font-size: 1.2rem;
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.4rem;
-  display: inline-block;
-  position: relative;
-  bottom: 0.2rem;
-  cursor: pointer;
-}
-
-.user .nickname .pro.active {
-  background: #212f4b;
-}
-
-.datas {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 1.6rem;
-  text-align: left;
-  color: #9d9d9d;
-}
-
-.datas .number {
-  font-size: 2.4rem;
-  font-weight: bold;
-}
-
-.datas .type {
-  font-size: 1.2rem;
-}
-
-.menu {
-  font-size: 1.4rem;
-  color: #9d9d9d;
-  text-align: left;
-  margin: 0.8rem 0;
-}
-
-.menu li {
-  line-height: 3.6rem;
-  padding-left: 2rem;
-  cursor: pointer;
-}
-
-.menu .selected li {
-  background: #55bb8e;
-  color: #ffffff;
-  border-radius: 5px;
-} */
 </style>
