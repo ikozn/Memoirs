@@ -41,6 +41,11 @@ export function getBeforeDaysTime (date: string | number | Date, days: number) {
   return new Date(`${year}-${month}-${day}`)
 }
 
+const weekDay = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+export function formatWeekDay (date: string | number | Date) {
+  return weekDay[new Date(date).getDay()]
+}
+
 export function dateDif (date1: string | number | Date, date2: string | number | Date) {
   return (getDayTime(date1).getTime() - getDayTime(date2).getTime()) / A_DAY_TIME
 }

@@ -7,10 +7,11 @@
                   class="bg-white shadow-sm rounded px-3 py-2 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start text-gray-700 text-lg font-semibold py-2 px-2">
                       <span class="date">
-                        {{ day }}
+                        <span>{{ day }}</span>
                       </span>
                       <span class="more cursor-pointer">
-                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M4.5 10.5c-.825 0-1.5.675-1.5 1.5s.675 1.5 1.5 1.5S6 12.825 6 12s-.675-1.5-1.5-1.5zm15 0c-.825 0-1.5.675-1.5 1.5s.675 1.5 1.5 1.5S21 12.825 21 12s-.675-1.5-1.5-1.5zm-7.5 0c-.825 0-1.5.675-1.5 1.5s.675 1.5 1.5 1.5 1.5-.675 1.5-1.5-.675-1.5-1.5-1.5z"/></svg>
+                        <span class="text-gray-300 text-sm"> {{ weekDay }} </span>
+                        <!-- <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M4.5 10.5c-.825 0-1.5.675-1.5 1.5s.675 1.5 1.5 1.5S6 12.825 6 12s-.675-1.5-1.5-1.5zm15 0c-.825 0-1.5.675-1.5 1.5s.675 1.5 1.5 1.5S21 12.825 21 12s-.675-1.5-1.5-1.5zm-7.5 0c-.825 0-1.5.675-1.5 1.5s.675 1.5 1.5 1.5 1.5-.675 1.5-1.5-.675-1.5-1.5-1.5z"/></svg> -->
                       </span>
                     </div>
                     <div class="pb-3 text-sm">
@@ -37,7 +38,7 @@
 <script lang="ts">
 import { PropType, computed, defineComponent } from 'vue'
 import MemoItem from '@/components/MemoItem.vue'
-import { splitDate, objToArray } from '@/helper'
+import { splitDate, objToArray, formatWeekDay } from '@/helper'
 import { MemosProps } from '@/store'
 
 export default defineComponent({
@@ -67,7 +68,10 @@ export default defineComponent({
     // 判断是否是今天
     const isToday = new Date(props.date).toDateString() === new Date().toDateString()
 
+    // 格式化星期
+    const weekDay = formatWeekDay(props.date)
     return {
+      weekDay,
       isToday,
       memoSort,
       day
