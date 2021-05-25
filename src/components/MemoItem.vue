@@ -9,8 +9,13 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 // import { MemoProps } from '@/store'
+import { splitTime } from '@/helper'
 export default defineComponent({
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     memo: {
       type: String,
       required: true
@@ -22,11 +27,8 @@ export default defineComponent({
   },
   setup (props) {
     const date = new Date(props.time)
-    const hour = ('' + date.getHours()).padStart(2, '0')
-    const minute = ('' + date.getMinutes()).padStart(2, '0')
-    const second = ('' + date.getSeconds()).padStart(2, '0')
-
-    const timeStr = `${hour}:${minute}:${second}`
+    const { hour, minute, second } = splitTime(date)
+    const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`
     return {
       timeStr
     }

@@ -12,6 +12,18 @@ export function splitDate (date: string | number | Date) {
   }
 }
 
+export function splitTime (date: string | number | Date) {
+  const dateObj = new Date(date)
+  const hour = dateObj.getHours()
+  const minute = dateObj.getMinutes()
+  const second = dateObj.getSeconds()
+  return {
+    hour,
+    minute,
+    second
+  }
+}
+
 export function getDayTime (date: string | number | Date) {
   const { year, month, day } = splitDate(new Date(date))
   return new Date(`${year}-${month}-${day}`)

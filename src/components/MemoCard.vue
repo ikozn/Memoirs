@@ -2,7 +2,9 @@
       <div class="w-full">
         <div class="flex justify-center pt-4 px-5 ">
             <div class="w-full">
-                <div class="bg-white shadow-sm rounded px-3 py-2 hover:shadow-md transition-shadow">
+                <div
+                  :class="{ 'border-2 border-blue-400': isToday }"
+                  class="bg-white shadow-sm rounded px-3 py-2 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start text-gray-700 text-lg font-semibold py-2 px-2">
                       <span class="date">
                         {{ day }}
@@ -13,11 +15,11 @@
                     </div>
                     <div class="pb-3 text-sm">
                       <!-- memo 项目 -->
-                        <memo-item v-for="memo in memos" :key="memo" :memo="memo.memo" :time="memo.time" ></memo-item>
+                        <memo-item v-for="memo in memos" :key="memo" :memo="memo.memo" :time="memo.time" :id="memo.id"></memo-item>
                     </div>
-                    <div v-if="isToday" class="flex text-sm text-right pb-1 px-3 rounded-b-sm">
+                    <!-- <div v-if="isToday" class="flex text-sm text-right pb-1 px-3 rounded-b-sm">
                       <span class="bg-indigo-200 text-indigo-800 px-3 py-1 rounded-full uppercase text-xs">今天</span>
-                    </div>
+                    </div> -->
                     <!-- <div class="block bg-gray-100 text-sm text-right py-2 px-3 -mx-3 -mb-2 rounded-b-sm">
                         <button class="hover:text-gray-600 text-gray-200 font-bold py-2 px-4">
                             删除
@@ -55,7 +57,7 @@ export default defineComponent({
   setup (props) {
     const day = computed(() => {
       const { year, month, day } = splitDate(props.date)
-      return `${year}-${month}-${day}`
+      return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`
     })
 
     // 判断是否是今天
