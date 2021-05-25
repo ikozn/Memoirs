@@ -106,6 +106,21 @@ export default createStore<GlobalDataProps | string>({
     getMemoCount (state, count) {
       (state as GlobalDataProps).memoCount = count
     },
+    updateMemo (state, { newMemo, time }) {
+      const { memoList } = state as GlobalDataProps
+
+      const id = newMemo.id
+      const memo = newMemo.get('memo')
+      const dateTime = getDayTime(time as string).getTime()
+
+      if (memoList[dateTime]) {
+        memoList[dateTime].memos[id] = {
+          id,
+          memo,
+          time
+        }
+      }
+    },
     addMemo (state, { memoData }) {
       (state as GlobalDataProps).memoCount += 1
       addMemo(state as GlobalDataProps, memoData)
@@ -129,6 +144,12 @@ export default createStore<GlobalDataProps | string>({
       const owner = User.current()
       const newMemo = await new Memoires().save({ memo, owner })
       commit('addMemo', { memoData: newMemo })
+      return newMemo
+    },
+    async updateMemo ({ commit }, { id, memo, time }) {
+      const oldMemo = AV.Object.createWithoutData('Memoires', id)
+      const newMemo = await oldMemo.save({ memo })
+      commit('updateMemo', { newMemo, time })
       return newMemo
     },
     async getMemoCount ({ commit }) {

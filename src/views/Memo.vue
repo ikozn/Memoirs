@@ -33,7 +33,7 @@
           <loading :loading="inSubmit">
                 <div class="flex flex-col">
                   <div class="w-full">
-                    <input v-model="memo" class="resize-none w-full font-medium text-sm placeholder-gray-400 focus:outline-none p-4">
+                    <input v-focus v-model="memo" class="resize-none w-full font-medium text-sm placeholder-gray-400 focus:outline-none p-4">
                   </div>
                   <div class="w-full flex items-start justify-end">
                     <button @click.prevent="submitMemo"

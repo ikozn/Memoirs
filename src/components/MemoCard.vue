@@ -15,7 +15,7 @@
                     </div>
                     <div class="pb-3 text-sm">
                       <!-- memo 项目 -->
-                        <memo-item v-for="memo in memos" :key="memo" :memo="memo.memo" :time="memo.time" :id="memo.id"></memo-item>
+                        <memo-item v-for="memo in memoSort" :key="memo" :memo="memo.memo" :time="memo.time" :id="memo.id"></memo-item>
                     </div>
                     <!-- <div v-if="isToday" class="flex text-sm text-right pb-1 px-3 rounded-b-sm">
                       <span class="bg-indigo-200 text-indigo-800 px-3 py-1 rounded-full uppercase text-xs">今天</span>
@@ -37,7 +37,7 @@
 <script lang="ts">
 import { PropType, computed, defineComponent } from 'vue'
 import MemoItem from '@/components/MemoItem.vue'
-import { splitDate } from '@/helper'
+import { splitDate, objToArray } from '@/helper'
 import { MemosProps } from '@/store'
 
 export default defineComponent({
@@ -55,6 +55,10 @@ export default defineComponent({
     MemoItem
   },
   setup (props) {
+    const memoSort = computed(() => {
+      return objToArray(props.memos).sort((a, b) => b.time - a.time)
+    })
+    // 格式化当天数据
     const day = computed(() => {
       const { year, month, day } = splitDate(props.date)
       return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`
@@ -62,9 +66,11 @@ export default defineComponent({
 
     // 判断是否是今天
     const isToday = new Date(props.date).toDateString() === new Date().toDateString()
+
     return {
-      day,
-      isToday
+      isToday,
+      memoSort,
+      day
     }
   }
 })
