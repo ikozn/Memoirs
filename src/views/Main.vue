@@ -1,7 +1,7 @@
 <template>
   <section class="main-container">
     <aside class="aside overflow-hidden">
-      <sidebar :username="username" :day="day" :memoCount="memoCount"></sidebar>
+      <sidebar></sidebar>
     </aside>
     <main class="main">
       <router-view />
