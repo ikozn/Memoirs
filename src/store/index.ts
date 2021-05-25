@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import { getDayTime } from '@/helper'
+import createModal from '@/components/createModal'
 // - 初始化LeanCloud
 import AV from 'leancloud-storage'
 
@@ -106,6 +107,12 @@ export default createStore<GlobalDataProps | string>({
     getMemoCount (state, count) {
       (state as GlobalDataProps).memoCount = count
     },
+    delMemo (state, { id, time }) {
+      const { memoList } = state as GlobalDataProps
+      const dateTime = getDayTime(time as string).getTime()
+      delete memoList[dateTime].memos[id];
+      (state as GlobalDataProps).memoCount--
+    },
     updateMemo (state, { newMemo, time }) {
       const { memoList } = state as GlobalDataProps
 
@@ -145,6 +152,28 @@ export default createStore<GlobalDataProps | string>({
       const newMemo = await new Memoires().save({ memo, owner })
       commit('addMemo', { memoData: newMemo })
       return newMemo
+    },
+    async delMemo ({ commit }, { id, time }) {
+      const memo = AV.Object.createWithoutData('Memoires', id)
+      const confirm = await new Promise((resolve, reject) => {
+        createModal({
+          type: 'error',
+          title: '警告',
+          message: '是否要删除？',
+          confirmText: '删除',
+          onClose () {
+            resolve(false)
+          },
+          onConfirm () {
+            resolve(true)
+          }
+        })
+      })
+
+      if (!confirm) return false
+      const result = await memo.destroy()
+      commit('delMemo', { id, time })
+      return result
     },
     async updateMemo ({ commit }, { id, memo, time }) {
       const oldMemo = AV.Object.createWithoutData('Memoires', id)

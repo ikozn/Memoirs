@@ -100,9 +100,8 @@ export default defineComponent({
       if (memo.value.trim() !== '') {
         inSubmit.value = true
         store.dispatch('addMemo', { memo: memo.value })
-          .then((res) => {
+          .then(() => {
             memo.value = ''
-            console.log(res)
           }).finally(() => {
             inSubmit.value = false
           })
