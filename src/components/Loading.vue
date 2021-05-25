@@ -2,9 +2,11 @@
   <div class="relative w-full h-full">
     <slot>
     </slot>
-    <div v-if="loading" class="loading flex items-center justify-center w-full h-full text-black absolute bottom-0 left-0">
-      <span></span>
-    </div>
+    <slot name="loading">
+      <div v-if="loading" class="loading flex items-center justify-center w-full h-full text-black absolute bottom-0 left-0">
+        <span class="loadingIcon"></span>
+      </div>
+    </slot>
   </div>
 </template>
 
@@ -21,12 +23,12 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 .loading {
   background-color: #fafafa;
 }
 
-.loading span {
+.loadingIcon {
     display: block;
     position: relative;
     width: 30px;
@@ -37,7 +39,7 @@ export default defineComponent({
     animation: rotate 45s infinite linear;
 }
 
-.loading span::before {
+.loadingIcon::before {
     position: absolute;
     content: "";
     top: 0px;
@@ -54,7 +56,7 @@ export default defineComponent({
     animation: rotate 3s infinite ease-out;
 }
 
-.loading span::after {
+.loadingIcon::after {
     position: absolute;
     content: "";
     top: -2px;
