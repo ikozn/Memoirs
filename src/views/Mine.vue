@@ -1,9 +1,9 @@
 <template>
-  <section class="main-container">
+  <section class="mine-container">
     <aside class="aside overflow-hidden">
       <sidebar></sidebar>
     </aside>
-    <main class="main">
+    <main class="mine">
       <router-view />
     </main>
   </section>
@@ -24,14 +24,14 @@ export default defineComponent({
 </script>
 
 <style>
-.main-container {
+.mine-container {
   height: 100%;
   width: min-content;
   display: flex;
   margin: 0 auto;
 }
 
-.main {
+.mine {
   height: 100%;
 }
 
@@ -43,7 +43,7 @@ export default defineComponent({
   flex-shrink: 0;
   /* border:1px solid #42b983; */
 }
-.main {
+.mine {
   height: 100%;
   width: 640px;
   /* border:1px solid #fbeb53; */

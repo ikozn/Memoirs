@@ -23,7 +23,7 @@
       </validate-form>
       <p class="mt-12 text-xs text-center font-light text-gray-400">
         还没有账号？
-        <router-link to="Register" class="text-black font-medium"
+        <router-link to="register" class="text-black font-medium"
           >注册</router-link
         >
       </p>
