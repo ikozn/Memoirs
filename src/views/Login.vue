@@ -35,6 +35,7 @@
 import { defineComponent, ref } from 'vue'
 import ValidateInput, { RulesType } from '@/components/ValidateInput.vue'
 import ValidateForm from '@/components/ValidateForm.vue'
+import Message from '@/components/Message'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -75,11 +76,11 @@ export default defineComponent({
             password: passwdVal.value
           })
           .then(() => {
-            console.log('登录成功')
+            Message.success('登录成功')
             router.push('main')
           })
           .catch(({ error }) => {
-            console.log('登录失败', error)
+            Message.error(error)
           })
       }
     }

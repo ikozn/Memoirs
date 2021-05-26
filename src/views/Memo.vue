@@ -64,6 +64,7 @@ import { useStore } from 'vuex'
 import { MemoItem } from '@/store'
 import MemoCard from '@/components/MemoCard.vue'
 import Loading from '@/components/Loading.vue'
+import Message from '@/components/Message'
 import { objToArray, getAfterDaysTime, getBeforeDaysTime, getDayTime } from '@/helper'
 
 export default defineComponent({
@@ -102,11 +103,16 @@ export default defineComponent({
         store.dispatch('addMemo', { memo: memo.value })
           .then(() => {
             memo.value = ''
+            Message.success('已记录', 1.5)
           }).finally(() => {
             inSubmit.value = false
           })
       }
     }
+
+    // Message.info('提示信息', 2, () => {
+    //   console.log('消息提示关闭')
+    // })
 
     return {
       loadMemos,

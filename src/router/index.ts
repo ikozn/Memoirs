@@ -20,10 +20,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/mine',
     name: 'Mine',
     component: Mine,
+    redirect: { name: 'Memos' },
     children: [
       {
-        path: '',
-        name: 'Memo',
+        path: 'memos',
+        name: 'Memos',
         component: Memo,
         meta: {
           needLogin: true

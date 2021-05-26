@@ -31,7 +31,7 @@
 import { defineComponent, ref, PropType } from 'vue'
 import { useStore } from 'vuex'
 import { splitTime } from '@/helper'
-// import Loading from '@/components/Loading.vue'
+import Message from '@/components/Message'
 
 export default defineComponent({
   // components: {
@@ -86,6 +86,7 @@ export default defineComponent({
         })
         .finally(() => {
           loading.value = false
+          Message.success('保存成功')
         })
     }
 

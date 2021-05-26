@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen">
     <div class="text-base flex items-center px-4 h-16">
-      <router-link :to="{ name: 'Memo'}" v-slot="{ href }">
+      <router-link :to="{ name: 'Memos'}" v-slot="{ href }">
         <label class="text-lg font-bold mr-1 text-gray-600">
           <a :href="href"> {{ username }} </a>
         </label>
@@ -22,7 +22,7 @@
     </div>
     <div class="flex w-full max-w-xs text-sm mt-2">
       <ul class="flex flex-col w-full">
-        <sidebar-item text="MEMO" :to="{ name: 'Memo' }">
+        <sidebar-item text="MEMO" :to="{ name: 'Memos' }">
           <template #icon>
             <svg
               fill="none"
